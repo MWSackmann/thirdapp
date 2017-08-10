@@ -27,6 +27,9 @@ public class Address implements Serializable {
     @JoinColumn(name="EMP_ID")
     private Person person;
 
+    @Embedded
+    private Communication communication = new Communication();
+
     public Long getId() {
         return id;
     }
@@ -61,6 +64,22 @@ public class Address implements Serializable {
 
      public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Communication getCommunication() {
+        return communication;
+    }
+
+    public void setCommunication(Communication communication) {
+        this.communication = communication;
+    }
+
+    public Address(String city, String street, String houseNo, Person person, Communication communication) {
+        this.city = city;
+        this.street = street;
+        this.houseNo = houseNo;
+        this.person = person;
+        this.communication = communication;
     }
 
     public Address(String city, String street, String houseNo) {

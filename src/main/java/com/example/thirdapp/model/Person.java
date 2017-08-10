@@ -61,14 +61,13 @@ public class Person implements Serializable{
         this.lastName = lastName;
     }
 
-    public Person(String firstName, String lastName, Address address, Address address2nd) {
+    public Person(String firstName, String lastName, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addresses = new ArrayList<>();
         address.setPerson(this);
-        address2nd.setPerson(this);
         this.addresses.add(address);
-        this.addresses.add(address2nd);
+
     }
 
     public Person() {
