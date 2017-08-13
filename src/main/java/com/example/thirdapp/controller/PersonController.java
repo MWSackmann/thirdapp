@@ -1,16 +1,21 @@
 package com.example.thirdapp.controller;
 
+import com.example.thirdapp.model.Address;
+import com.example.thirdapp.model.Mail;
 import com.example.thirdapp.model.Person;
+import com.example.thirdapp.model.Phone;
 import com.example.thirdapp.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
+import javax.validation.Valid;
 
 /**
  * Created by sackmann on 07.08.2017.
@@ -22,10 +27,17 @@ public class PersonController {
     @Autowired
     PersonRepository personRepository;
 
-    // method returns all posts available
+    // method returns all persons available
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {"application/json"})
     public ResponseEntity get() {
         return ResponseEntity.ok(personRepository.findAll());
+    }
+
+    // method reads single person via its id
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity getById(@PathVariable("id") long id) {
+        final Person person = personRepository.findOne(id);
+        return new ResponseEntity(person, HttpStatus.OK);
     }
 
     // method deletes single post via its id
@@ -37,5 +49,26 @@ public class PersonController {
         }
         personRepository.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    // Method creates person
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ResponseEntity post(@Valid @RequestBody Person person) {
+        updateRelation(person);
+        personRepository.save(person);
+        return new ResponseEntity(person.getId(), new HttpHeaders(), HttpStatus.CREATED);
+    }
+
+    private void updateRelation(Person person) {
+        for (Address address : person.getAddresses()) {
+            address.setPerson(person);
+            for (Phone phone : address.getCommunication().getPhones()) {
+                phone.setAddress(address);
+            }
+            for (Mail mail : address.getCommunication().getMails()) {
+                mail.setAddress(address);
+            }
+        }
+
     }
 }

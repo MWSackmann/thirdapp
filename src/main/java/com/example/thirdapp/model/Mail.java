@@ -16,7 +16,7 @@ public class Mail {
     @Column(name = "MAIL_ADDR")
     private String mailAddress;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="ADDR_ID")
     private Address address;
 

@@ -50,10 +50,5 @@ public class PersonLoader implements ApplicationListener<ContextRefreshedEvent> 
 
         personRepository.save(person);
 
-//        for (int i = 0; i < 5; i++) {
-//            personRepository.save(new Person("Michael", "Huber " + i,
-//                                              new Address("Koeln", "Hauptstrasse", "1"),
-//                                              new Address("Berlin","Bahnhofsstrasse","99")));
-//        }
     }
 }

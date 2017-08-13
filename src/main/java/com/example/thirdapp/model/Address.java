@@ -1,13 +1,12 @@
 package com.example.thirdapp.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created by sackmann on 07.08.2017.
  */
 @Entity(name = "ADDR")
-public class Address implements Serializable {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +22,7 @@ public class Address implements Serializable {
     @Column(name = "HOUSE_NO")
     private String houseNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="EMP_ID")
     private Person person;
 

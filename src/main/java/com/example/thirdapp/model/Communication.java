@@ -12,10 +12,10 @@ import java.util.List;
 @Embeddable
 public class Communication {
 
-    @OneToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL},mappedBy="address" )
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "address")
     private List<Phone> phones;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL},mappedBy="address" )
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "address")
     private List<Mail> mails;
 
     public Communication() {

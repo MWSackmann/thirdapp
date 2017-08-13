@@ -1,7 +1,6 @@
 package com.example.thirdapp.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ import java.util.List;
  * Created by sackmann on 07.08.2017.
  */
 @Entity(name = "PERSON_TAB")
-public class Person implements Serializable{
+public class Person {
     @Id
     @Column(name = "EMP_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +20,7 @@ public class Person implements Serializable{
     @Column(name = "LNAME")
     private String lastName;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL},mappedBy="person" )
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "person")
     private List<Address> addresses;
 
     public Long getId() {
