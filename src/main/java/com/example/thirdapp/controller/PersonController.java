@@ -1,10 +1,8 @@
 package com.example.thirdapp.controller;
 
-import com.example.thirdapp.model.Address;
-import com.example.thirdapp.model.Mail;
 import com.example.thirdapp.model.Person;
-import com.example.thirdapp.model.Phone;
 import com.example.thirdapp.repository.PersonRepository;
+import com.example.thirdapp.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,50 +23,33 @@ import javax.validation.Valid;
 public class PersonController {
 
     @Autowired
-    PersonRepository personRepository;
+    PersonService personService;
 
     // method returns all persons available
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {"application/json"})
     public ResponseEntity get() {
-        return ResponseEntity.ok(personRepository.findAll());
+        return ResponseEntity.ok(personService.readAll());
     }
 
     // method reads single person via its id
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") long id) {
-        final Person person = personRepository.findOne(id);
+        final Person person = personService.read(id);
         return new ResponseEntity(person, HttpStatus.OK);
     }
 
     // method deletes single post via its id
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteById(@PathVariable("id") long id) {
-        final Person person = personRepository.findOne(id);
-        if (person == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-        personRepository.delete(id);
+        personService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     // Method creates person
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity post(@Valid @RequestBody Person person) {
-        updateRelation(person);
-        personRepository.save(person);
+        personService.create(person);
         return new ResponseEntity(person.getId(), new HttpHeaders(), HttpStatus.CREATED);
     }
 
-    private void updateRelation(Person person) {
-        for (Address address : person.getAddresses()) {
-            address.setPerson(person);
-            for (Phone phone : address.getCommunication().getPhones()) {
-                phone.setAddress(address);
-            }
-            for (Mail mail : address.getCommunication().getMails()) {
-                mail.setAddress(address);
-            }
-        }
-
-    }
 }

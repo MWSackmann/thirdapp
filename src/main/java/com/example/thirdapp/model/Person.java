@@ -21,7 +21,10 @@ public class Person {
     private String lastName;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "person")
-    private List<Address> addresses;
+    private List<AddressLink> addressLinks;
+
+//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "person")
+//    private List<Address> addresses;
 
     public Long getId() {
         return id;
@@ -35,12 +38,21 @@ public class Person {
         return firstName;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+//    public List<Address> getAddresses() {
+//        return addresses;
+//    }
+
+//    public void setAddresses(List<Address> addresses) {
+//        this.addresses = addresses;
+//    }
+
+
+    public List<AddressLink> getAddressLinks() {
+        return addressLinks;
     }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddressLinks(List<AddressLink> addressLinks) {
+        this.addressLinks = addressLinks;
     }
 
     public void setFirstName(String firstName) {
@@ -60,14 +72,14 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Person(String firstName, String lastName, Address address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.addresses = new ArrayList<>();
-        address.setPerson(this);
-        this.addresses.add(address);
-
-    }
+//    public Person(String firstName, String lastName) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.addresses = new ArrayList<>();
+//        address.setPerson(this);
+//        this.addresses.add(address);
+//
+//    }
 
     public Person() {
     }

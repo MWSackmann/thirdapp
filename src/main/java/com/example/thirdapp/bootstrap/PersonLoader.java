@@ -1,10 +1,13 @@
 package com.example.thirdapp.bootstrap;
 
-import com.example.thirdapp.model.Address;
-import com.example.thirdapp.model.Mail;
+import com.example.thirdapp.model.AddressLink;
 import com.example.thirdapp.model.Person;
-import com.example.thirdapp.model.Phone;
 import com.example.thirdapp.repository.PersonRepository;
+import com.example.thirdapp.service.PersonService;
+import com.example.tool.model.Address;
+import com.example.tool.model.Mail;
+import com.example.tool.model.Phone;
+import com.example.tool.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -19,7 +22,10 @@ import java.util.ArrayList;
 public class PersonLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    PersonRepository personRepository;
+    PersonService personService;
+
+    @Autowired
+    AddressService addressService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -27,16 +33,17 @@ public class PersonLoader implements ApplicationListener<ContextRefreshedEvent> 
         Person person = new Person();
         person.setFirstName("Michael");
         person.setLastName("Mueller");
-        person.setAddresses(new ArrayList<>());
+        person.setAddressLinks(new ArrayList<>());
+      //        person.setAddresses(new ArrayList<>());
 
         Address address = new Address();
         address.getCommunication().setPhones(new ArrayList<>());
         address.getCommunication().setMails(new ArrayList<>());
-        address.setPerson(person);
+//        address.setPerson(person);
         address.setCity("Koel");
         address.setStreet("Hauptstrasse");
         address.setHouseNo("1");
-        person.getAddresses().add(address);
+//        person.getAddresses().add(address);
 
         Phone phone = new Phone();
         phone.setAddress(address);
@@ -47,8 +54,15 @@ public class PersonLoader implements ApplicationListener<ContextRefreshedEvent> 
         mail.setAddress(address);
         mail.setMailAddress("michael@test.com");
         address.getCommunication().getMails().add(mail);
+        Long addressId = addressService.create(address);
 
-        personRepository.save(person);
+        AddressLink addressLink = new AddressLink();
+        addressLink.setPerson(person);
+        addressLink.setId(addressId);
+        person.getAddressLinks().add(addressLink);
+        personService.create(person);
+
+
 
     }
 }

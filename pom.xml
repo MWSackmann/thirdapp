@@ -69,12 +69,18 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.example.tool</groupId>
+			<artifactId>address</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 		<!-- subscription aspect -->
 		<!--<dependency>-->
 			<!--<groupId>com.sap.om</groupId>-->
 			<!--<artifactId>order-subscription-aspect</artifactId>-->
 			<!--<version>1.0-SNAPSHOT</version>-->
 		<!--</dependency>-->
+
 
 	</dependencies>
 
