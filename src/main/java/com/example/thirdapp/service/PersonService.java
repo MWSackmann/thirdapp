@@ -3,6 +3,7 @@ package com.example.thirdapp.service;
 import com.example.thirdapp.model.AddressLink;
 import com.example.thirdapp.model.Person;
 import com.example.thirdapp.repository.PersonRepository;
+import com.example.tool.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private AddressService addressService;
+
     public void create(Person person){
 
         for(AddressLink addressLink : person.getAddressLinks()){
@@ -29,7 +33,15 @@ public class PersonService {
     }
 
     public Person read(Long id){
-        return personRepository.findOne(id);
+
+        Person person = personRepository.findOne(id);
+        if(person== null){
+            return null;
+        }
+        for(AddressLink addressLink: person.getAddressLinks()){
+            addressLink.setAddress(addressService.read(addressLink.getId()));
+        }
+        return person;
     }
 
     public Iterable<Person> readAll(){

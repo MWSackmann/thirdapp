@@ -1,5 +1,7 @@
 package com.example.thirdapp.model;
 
+import com.example.tool.model.Address;
+
 import javax.persistence.*;
 
 /**
@@ -17,6 +19,8 @@ public class AddressLink {
     @JoinColumn(name="EMP_ID")
     private Person person;
 
+    private Address address;
+
     public AddressLink() {
     }
 
@@ -28,11 +32,15 @@ public class AddressLink {
         this.id = id;
     }
 
-    public Person getPerson() {
-        return person;
-    }
-
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

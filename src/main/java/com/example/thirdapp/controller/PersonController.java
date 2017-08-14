@@ -35,7 +35,11 @@ public class PersonController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity getById(@PathVariable("id") long id) {
         final Person person = personService.read(id);
-        return new ResponseEntity(person, HttpStatus.OK);
+        if(person != null) {
+            return new ResponseEntity(person, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     // method deletes single post via its id
