@@ -1,7 +1,6 @@
 package com.example.thirdapp.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +22,6 @@ public class Person {
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "person")
     private List<AddressLink> addressLinks;
 
-//    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "person")
-//    private List<Address> addresses;
-
     public Long getId() {
         return id;
     }
@@ -37,15 +33,6 @@ public class Person {
     public String getFirstName() {
         return firstName;
     }
-
-//    public List<Address> getAddresses() {
-//        return addresses;
-//    }
-
-//    public void setAddresses(List<Address> addresses) {
-//        this.addresses = addresses;
-//    }
-
 
     public List<AddressLink> getAddressLinks() {
         return addressLinks;
@@ -71,15 +58,6 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
-//    public Person(String firstName, String lastName) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.addresses = new ArrayList<>();
-//        address.setPerson(this);
-//        this.addresses.add(address);
-//
-//    }
 
     public Person() {
     }

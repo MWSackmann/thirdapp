@@ -19,6 +19,7 @@ public class AddressLink {
     @JoinColumn(name="EMP_ID")
     private Person person;
 
+    @Transient
     private Address address;
 
     public AddressLink() {

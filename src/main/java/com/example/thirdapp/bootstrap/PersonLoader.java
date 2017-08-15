@@ -2,7 +2,6 @@ package com.example.thirdapp.bootstrap;
 
 import com.example.thirdapp.model.AddressLink;
 import com.example.thirdapp.model.Person;
-import com.example.thirdapp.repository.PersonRepository;
 import com.example.thirdapp.service.PersonService;
 import com.example.tool.model.Address;
 import com.example.tool.model.Mail;
@@ -34,16 +33,13 @@ public class PersonLoader implements ApplicationListener<ContextRefreshedEvent> 
         person.setFirstName("Michael");
         person.setLastName("Mueller");
         person.setAddressLinks(new ArrayList<>());
-      //        person.setAddresses(new ArrayList<>());
 
         Address address = new Address();
         address.getCommunication().setPhones(new ArrayList<>());
         address.getCommunication().setMails(new ArrayList<>());
-//        address.setPerson(person);
         address.setCity("Koel");
         address.setStreet("Hauptstrasse");
         address.setHouseNo("1");
-//        person.getAddresses().add(address);
 
         Phone phone = new Phone();
         phone.setAddress(address);
