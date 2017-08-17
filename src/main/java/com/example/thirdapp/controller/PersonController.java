@@ -54,6 +54,19 @@ public class PersonController {
     }
 
     // Method creates person
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    public ResponseEntity update(@PathVariable("id") long id, @Valid @RequestBody Person person) {
+        if(personService.read(id)==null){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        if(id != person.getId()){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        personService.update(person);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    // Method creates person
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity post(@Valid @RequestBody Person person) {
         for (AddressLink addressLink : person.getAddressLinks()) {

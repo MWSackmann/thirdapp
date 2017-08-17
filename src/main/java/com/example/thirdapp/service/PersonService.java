@@ -27,8 +27,11 @@ public class PersonService {
 
         for(AddressLink addressLink : person.getAddressLinks()){
             addressLink.setPerson(person);
+            if(addressLink.getAddress()!= null ){
+                addressLink.setId(addressService.create(addressLink.getAddress()));
+            }
         }
-        personRepository.save(person);
+        personRepository.saveAndFlush(person);
 
     }
 
@@ -47,6 +50,11 @@ public class PersonService {
     public Iterable<Person> readAll(){
         return personRepository.findAll();
     }
+
+    public void update(Person person){
+        personRepository.saveAndFlush(person);
+    }
+
 
     public void delete(Long id){
         if(personRepository.findOne(id) != null){
