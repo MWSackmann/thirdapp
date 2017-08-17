@@ -23,7 +23,7 @@ public class Address implements Serializable {
     @Column(name = "HOUSE_NO")
     private String houseNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="EMP_ID")
     private Person person;
 

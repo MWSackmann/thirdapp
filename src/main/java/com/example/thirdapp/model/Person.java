@@ -21,7 +21,7 @@ public class Person implements Serializable{
     @Column(name = "LNAME")
     private String lastName;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL},mappedBy="person" )
+    @OneToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL},mappedBy="person", orphanRemoval = true)
     private List<Address> addresses;
 
     public Long getId() {

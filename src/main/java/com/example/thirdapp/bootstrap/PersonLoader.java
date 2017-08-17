@@ -19,7 +19,7 @@ public class PersonLoader implements ApplicationListener<ContextRefreshedEvent> 
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             personRepository.save(new Person("Michael", "Huber " + i,
                                               new Address("Koeln", "Hauptstrasse", "1"),
                                               new Address("Berlin","Bahnhofsstrasse","99")));
