@@ -19,7 +19,7 @@ public class Person {
     @Column(name = "LNAME")
     private String lastName;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "person")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "person", orphanRemoval = true)
     private List<AddressLink> addressLinks;
 
     public Long getId() {

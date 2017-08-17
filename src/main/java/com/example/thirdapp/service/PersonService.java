@@ -3,6 +3,7 @@ package com.example.thirdapp.service;
 import com.example.thirdapp.model.AddressLink;
 import com.example.thirdapp.model.Person;
 import com.example.thirdapp.repository.PersonRepository;
+import com.example.tool.model.Address;
 import com.example.tool.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class PersonService {
                 addressLink.setId(addressService.create(addressLink.getAddress()));
             }
         }
-        personRepository.saveAndFlush(person);
+        personRepository.save(person);
 
     }
 
@@ -52,12 +53,23 @@ public class PersonService {
     }
 
     public void update(Person person){
-        personRepository.saveAndFlush(person);
+        for(AddressLink addressLink: person.getAddressLinks()){
+            if(addressLink.getAddress() == null){
+                addressService.delete(addressLink.getId());
+            } else {
+                addressService.update(addressLink.getAddress());
+            }
+        }
+        personRepository.save(person);
     }
 
 
     public void delete(Long id){
-        if(personRepository.findOne(id) != null){
+        Person person = personRepository.findOne(id);
+        if(person != null){
+            for(AddressLink addressLink: person.getAddressLinks()){
+                addressService.delete(addressLink.getId());
+            }
             personRepository.delete(id);
         }
     }
