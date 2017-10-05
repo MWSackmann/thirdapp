@@ -26,13 +26,19 @@ public class PersonController {
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = {"application/json"})
     public ResponseEntity get() {
-        return ResponseEntity.ok(personRepository.findAll());
+        return ResponseEntity.ok(personRepository.findAllByOrderByIdDesc());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = {"application/json"})
     public ResponseEntity getById(@PathVariable("id") long id) {
         return ResponseEntity.ok(personRepository.findOne(id));
     }
+
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity create(@Valid @RequestBody Person person) {
+        return ResponseEntity.ok(personRepository.save(person).getId());
+    }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity updateById(@PathVariable("id") long id, @Valid @RequestBody Person person) {
